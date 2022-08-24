@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import { getSecretWord } from "./actions/getSecretWord";
+import Congrats from "./Congrats";
+import GuessedWords from "./GuessedWords";
+import Input from "./Input";
 
 function App() {
+  const success = false;
+  const secretWord = "party";
+  const guessedWords = [];
+
+  useEffect(() => {
+    getSecretWord();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div data-test="component-app" className="container">
+      <h1>Jotto</h1>
+      <Congrats success={false} />
+      <Input success={success} secretWord={secretWord} />
+      <GuessedWords
+        guessedWords={[{ guessedWord: "train", letterMatchCount: 3 }]}
+      />
     </div>
   );
 }
